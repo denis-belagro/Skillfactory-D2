@@ -77,6 +77,11 @@
 >>> print(best)
 {'authorUser': 1, 'ratingAuthor': 14}
 
+#лучший пользователь и рейтинг его(второй вариант)
+best = Author.objects.all().order_by('-ratingAuthor')[0]
+print(best.authorUser)
+print(best.ratingAuthor)
+
 #лучшая статья
 best_st = Post.objects.all().order_by('-rating')[0]
 >>> print(best_st)

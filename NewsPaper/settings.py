@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 
     'news',
+    'django_filters',
 ]
 
 STATICFILES_DIRS = [

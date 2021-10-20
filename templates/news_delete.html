@@ -1,0 +1,42 @@
+{% extends 'flatpages/default.html' %} 
+ <!-- Название у нас будет proudcts -->
+{% block title %}
+newspage
+{% endblock title %}
+ <!-- В контенте на странице мы выводим сам товар, айди которого было передано в адрес -->
+{% block content %}
+<h2>Вы действительно хотите удалить данный новость?</h2>
+<table>
+    <tr>
+        <td>
+            Заголовок
+        </td>
+        <td>
+            Дата создания
+        </td>
+        <td>
+            Текст
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            {{ post.title }} <!-- не забываем, что переменные в шаблоне ничем не отличаются от переменных в python. Здесь так же можно получать доступ к полям класса. Например, здесь мы выводим имя, в следующем столбце описание, и т.д.  -->
+        </td>
+        <td>
+            {{ post.dateCreation|date:'d-M-Y h:m' }}
+        </td>
+
+        <td>
+           {{ post.text }}
+        </td>
+        
+    </tr>
+
+</table>
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="подтвердить"></form>
+    
+
+{% endblock content %}

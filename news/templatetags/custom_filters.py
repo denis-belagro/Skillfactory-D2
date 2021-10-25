@@ -13,4 +13,16 @@ def multiply(value, arg):
 def censor(value, arg): # первый аргумент здесь — это то значение, к которому надо применить фильтр, второй аргумент — это аргумент фильтра, т.е. примерно следующее будет в шаблоне value|multiply:arg
     s = value.lower().replace(arg, 'XXX')
     return s
-    
+
+@register.filter(name='update_page')
+def update_page(full_path:str, page:int):
+    try:
+        params_list = full_path.split('?')[1].split('&')
+        params = dict([tuple(str(param).split('=')) for param  in params_list])
+        params.update({'page' : page})
+        link = ''
+        for key, value in params.items():
+            link += (f"{key}={value}&")
+        return link[:-1]
+    except:
+        return f"page={page}"       

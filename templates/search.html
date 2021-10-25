@@ -12,7 +12,7 @@ Search
 <!-- В контенте на странице мы выводим все товары -->
 {% block content %}
 <h1>Все новости</h1>
-<h3> {{  newspage | length}} </h3>
+
 <hr>
 <!-- Перед таблицей добавим форму для поиска -->
 <form method="GET">
@@ -35,7 +35,7 @@ Search
             Текст
         </td>
     </tr>
-{% for np in filter.qs  %} <!-- Для каждого товара будете генерироваться новая строчка, т.е. новый html код. При этом сам цикл работает точно так же, как и в python. product — переменная цикла, т.е. наш товар, взятый из общего списка -->
+{% for np in filter.qs %} <!-- Для каждого товара будете генерироваться новая строчка, т.е. новый html код. При этом сам цикл работает точно так же, как и в python. product — переменная цикла, т.е. наш товар, взятый из общего списка -->
     <tr>
         <td>
             {{ np.title|censor:'this' }} <!-- не забываем, что переменные в шаблоне ничем не отличаются от переменных в python. Здесь так же можно получать доступ к полям класса. Например, здесь мы выводим имя, в следующем столбце описание, и т.д.  -->
@@ -57,8 +57,11 @@ Search
  
  <!-- Если доступна предыдущая страница, то даём ссылку на неё и самую первую страницу -->
  {% if page_obj.has_previous %}
-     <a href="?page=1">First</a>
-     <a href="?page={{ page_obj.previous_page_number }}"><<<</a>
+    
+     <a href="?{{ request.get_full_path|update_page:1}}">First  </a>
+    <a href="?{{ request.get_full_path|update_page:page_obj.previous_page_number}}">  <<<  </a>
+
+
  {% endif %}
  
  <!-- Показываем только текущую страницу и ближайшие к ней, чтобы список не тянулся и не захламлял страницу -->
@@ -66,14 +69,17 @@ Search
      {% if page_obj.number == num %}
          <a>{{ num }}</a>
      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-         <a href="?page={{ num }}">{{ num }}</a>
+        
+         <a href="?{{ request.get_full_path|update_page:num }}">{{ num }}</a>
      {% endif %}
  {% endfor %}
  
  <!-- Если есть следующая страница, то даём ссылку на неё и на самую последнюю страницу -->
  {% if page_obj.has_next %}
-     <a href="?page={{ page_obj.next_page_number }}">>>></a>
-     <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    
+     <a class='paginator' href="?{{ request.get_full_path|update_page:page_obj.next_page_number }}">>>></a>
+     <a class='paginator' href="?{{ request.get_full_path|update_page:page_obj.paginator.num_pages }}">Last</a>
+
  {% endif %}
  
  {% endif %}

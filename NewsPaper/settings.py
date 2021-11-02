@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django_filters',
 ]
 
+LOGIN_URL =  '/admin/'
+
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]

@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView, UpdateView, CreateView, D
 from .models import Post
 from .filters import ProductFilter # импортируем недавно написанный фильтр
 from .forms import ProductForm # импортируем нашу форму
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class NewsList(ListView):
@@ -35,7 +36,7 @@ class NewsCreateView(CreateView):
     template_name = 'news_add.html'
     form_class = ProductForm
 
-class NewsUpdateView(UpdateView):
+class NewsUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'news_add.html'
     form_class = ProductForm
  
